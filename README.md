@@ -7,9 +7,9 @@ Each animal has randomly generated hunger, thirst, and hygiene stats. Click a ca
 ## Tech Stack
 
 - **Next.js 16** (App Router)
-- **TanStack Query** for data fetching and cache
-- **Zod 4** for runtime schema validation
 - **Tailwind CSS** for styling
+- **TanStack Query** for data fetching and cache
+- **Zod** for runtime schema validation
 
 ## Getting Started
 
