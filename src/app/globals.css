@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Tailwind v4 auto-detects content; @source makes the src layout explicit. */
+@source "../**/*.{ts,tsx}";
