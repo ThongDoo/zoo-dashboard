@@ -1,7 +1,11 @@
+// Client Component: uses useEffect / useCallback to attach keyboard and
+// scroll-lock listeners to `document`, and receives onClose / onFeed* event
+// handlers from its parent. Both are client-only concerns.
 "use client"
 
 import { useEffect, useCallback } from "react"
 import type { Animal } from "@/types/animal"
+import Icon from "@/components/Icon"
 import StatusBar from "@/components/StatusBar"
 import { formatRelativeTime } from "@/utils/status"
 
@@ -57,9 +61,7 @@ export default function AnimalModal({
 				{/* Header */}
 				<div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-start justify-between rounded-t-2xl">
 					<div className="flex items-center gap-4">
-						<span className="text-5xl" role="img" aria-label={animal.species}>
-							{animal.emoji}
-						</span>
+						<Icon src={animal.icon} alt={animal.species} size={56} />
 						<div>
 							<h2 id="modal-title" className="text-xl font-bold text-slate-800">
 								{animal.name}

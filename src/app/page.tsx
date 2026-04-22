@@ -1,4 +1,6 @@
 import AnimalGrid from "@/components/AnimalGrid"
+import Icon from "@/components/Icon"
+import lionIcon from "@/assets/icons/animals/lion.svg"
 
 export default function HomePage() {
 	return (
@@ -7,7 +9,7 @@ export default function HomePage() {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 					<div className="flex items-center gap-3">
 						<span className="text-4xl" role="img" aria-label="Zoo">
-							🦁
+							<Icon src={lionIcon} alt="Lion" size={48} />
 						</span>
 						<div>
 							<h1 className="text-2xl font-bold text-slate-800">

@@ -1,6 +1,10 @@
+// Client Component: accepts an onSelect callback from its parent (AnimalGrid)
+// and wires it to an onClick handler. Event handlers cannot cross the
+// server/client boundary, so this has to render on the client.
 "use client"
 
 import type { Animal } from "@/types/animal"
+import Icon from "@/components/Icon"
 import StatusBar from "@/components/StatusBar"
 import StatusBadge from "@/components/StatusBadge"
 
@@ -19,9 +23,7 @@ export default function AnimalCard({ animal, onSelect }: AnimalCardProps) {
 		>
 			{/* Card header */}
 			<div className="flex items-start justify-between mb-3">
-				<span className="text-4xl" role="img" aria-hidden="true">
-					{animal.emoji}
-				</span>
+				<Icon src={animal.icon} alt={animal.species} size={48} />
 				<StatusBadge status={animal.status} />
 			</div>
 

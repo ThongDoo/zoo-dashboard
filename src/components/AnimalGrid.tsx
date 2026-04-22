@@ -1,3 +1,6 @@
+// Client Component: holds pagination and selected-animal state with
+// useState/useMemo/useCallback and drives React Query hooks (useAnimals,
+// useQueryClient), all of which require a client runtime.
 "use client"
 
 import { useState, useMemo, useCallback } from "react"
