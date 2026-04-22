@@ -7,14 +7,14 @@ interface LastUpdatedProps {
 }
 
 export default function LastUpdated({ timestamp }: LastUpdatedProps) {
-	const [text, setText] = useState("just now")
+	const [text, setText] = useState("Just now")
 
 	// Uses useEffect + setInterval to update the "X seconds ago" text every second.
 	// Live DOM updates require the client boundary.
 	useEffect(() => {
 		const update = () => {
 			const diffSecs = Math.floor((Date.now() - timestamp) / 1000)
-			if (diffSecs < 5) setText("just now")
+			if (diffSecs < 5) setText("Just now")
 			else if (diffSecs < 60) setText(`${diffSecs}s ago`)
 			else setText(`${Math.floor(diffSecs / 60)}m ago`)
 		}

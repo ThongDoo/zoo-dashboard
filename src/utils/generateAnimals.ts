@@ -62,7 +62,7 @@ export function generateAnimals(): Animal[] {
 			thirst: randomInt(0, 100),
 			hygiene: randomInt(0, 100),
 		},
-		lastFed: new Date(
+		lastCare: new Date(
 			Date.now() - randomInt(0, 8) * 60 * 60 * 1000,
 		).toISOString(),
 	}))

@@ -72,7 +72,7 @@ Returns a fresh list of animals with randomized status values.
       "emoji": "🦁",
       "age": 7,
       "status": { "hunger": 42, "thirst": 71, "hygiene": 88 },
-      "lastFed": "2026-04-21T10:15:00.000Z"
+      "lastCare": "2026-04-21T10:15:00.000Z"
     }
   ],
   "generatedAt": "2026-04-21T12:00:00.000Z"

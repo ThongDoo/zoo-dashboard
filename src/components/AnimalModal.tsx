@@ -8,6 +8,7 @@ import type { Animal } from "@/types/animal"
 import Icon from "@/components/Icon"
 import StatusBar from "@/components/StatusBar"
 import { formatRelativeTime } from "@/utils/status"
+import closeIcon from "@/assets/icons/buttons/close.svg"
 
 interface AnimalModalProps {
 	animal: Animal
@@ -74,19 +75,7 @@ export default function AnimalModal({
 						aria-label="Close modal"
 						className="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
 					>
-						<svg
-							className="w-5 h-5"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							strokeWidth={2}
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
+						<Icon src={closeIcon} alt="Close" size={24} />
 					</button>
 				</div>
 
@@ -97,8 +86,8 @@ export default function AnimalModal({
 						{[
 							{ label: "Age", value: `${animal.age} years` },
 							{
-								label: "Last fed",
-								value: formatRelativeTime(animal.lastFed),
+								label: "Last care",
+								value: formatRelativeTime(animal.lastCare),
 							},
 						].map(({ label, value }) => (
 							<div key={label} className="bg-slate-50 rounded-lg p-3">
@@ -134,7 +123,9 @@ export default function AnimalModal({
 								disabled={animal.status.hunger >= 100}
 								className="flex flex-col items-center justify-center gap-1 px-3 py-2.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-lg hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 							>
-								<span className="text-xl" aria-hidden="true">🍖</span>
+								<span className="text-xl" aria-hidden="true">
+									🍖
+								</span>
 								Feed Food
 							</button>
 							<button
@@ -143,7 +134,9 @@ export default function AnimalModal({
 								disabled={animal.status.thirst >= 100}
 								className="flex flex-col items-center justify-center gap-1 px-3 py-2.5 text-xs font-semibold text-sky-700 bg-sky-50 border border-sky-100 rounded-lg hover:bg-sky-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 							>
-								<span className="text-xl" aria-hidden="true">💧</span>
+								<span className="text-xl" aria-hidden="true">
+									💧
+								</span>
 								Feed Water
 							</button>
 							<button
@@ -152,12 +145,13 @@ export default function AnimalModal({
 								disabled={animal.status.hygiene >= 100}
 								className="flex flex-col items-center justify-center gap-1 px-3 py-2.5 text-xs font-semibold text-violet-700 bg-violet-50 border border-violet-100 rounded-lg hover:bg-violet-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 							>
-								<span className="text-xl" aria-hidden="true">🧼</span>
+								<span className="text-xl" aria-hidden="true">
+									🧼
+								</span>
 								Clean
 							</button>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>

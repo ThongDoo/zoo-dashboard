@@ -22,7 +22,7 @@ export const AnimalSchema = z.object({
 	icon: AnimalIconSchema,
 	age: z.number().int().positive(),
 	status: AnimalStatusSchema,
-	lastFed: z.iso.datetime(),
+	lastCare: z.iso.datetime(),
 })
 
 export const AnimalsResponseSchema = z.object({
