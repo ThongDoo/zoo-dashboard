@@ -3,11 +3,12 @@
 // handlers from its parent. Both are client-only concerns.
 "use client"
 
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useRef } from "react"
 import type { Animal } from "@/types/animal"
 import Icon from "@/components/Icon"
 import StatusBar from "@/components/StatusBar"
 import { formatRelativeTime } from "@/utils/status"
+import { getAnimalIcon } from "@/utils/animalIcons"
 import closeIcon from "@/assets/icons/buttons/close.svg"
 
 interface AnimalModalProps {
@@ -18,6 +19,9 @@ interface AnimalModalProps {
 	onClean: (animal: Animal) => void
 }
 
+const FOCUSABLE_SELECTOR =
+	'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
 export default function AnimalModal({
 	animal,
 	onClose,
@@ -25,21 +29,61 @@ export default function AnimalModal({
 	onFeedWater,
 	onClean,
 }: AnimalModalProps) {
-	// Attaches keyboard/click event listeners for dismissal. These require the
-	// client boundary.
+	const panelRef = useRef<HTMLDivElement>(null)
+	const icon = getAnimalIcon(animal.species)
+
+	// Tab/Shift+Tab containment in handleKeyDown.
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent) => {
-			if (e.key === "Escape") onClose()
+			if (e.key === "Escape") {
+				onClose()
+				return
+			}
+			if (e.key !== "Tab" || !panelRef.current) return
+
+			const focusables = Array.from(
+				panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+			)
+			if (focusables.length === 0) {
+				e.preventDefault()
+				return
+			}
+			const first = focusables[0]
+			const last = focusables[focusables.length - 1]
+			const active = document.activeElement as HTMLElement | null
+			const insidePanel = active && panelRef.current.contains(active)
+
+			// The logic ensures that pressing the "Tab" key alone or with the "Shift" key behaves correctly
+			// for both forward and backward/circular navigation within the focusable elements of the modal.
+			if (e.shiftKey) {
+				if (!insidePanel || active === first) {
+					e.preventDefault()
+					last.focus()
+				}
+			} else {
+				if (!insidePanel || active === last) {
+					e.preventDefault()
+					first.focus()
+				}
+			}
 		},
 		[onClose],
 	)
 
+	// Auto-focus the first focusable on mount, and restore focus to the previously-focused element on unmount.
 	useEffect(() => {
+		const previouslyFocused = document.activeElement as HTMLElement | null
 		document.addEventListener("keydown", handleKeyDown)
 		document.body.style.overflow = "hidden"
+
+		const focusables =
+			panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+		focusables?.[0]?.focus()
+
 		return () => {
 			document.removeEventListener("keydown", handleKeyDown)
 			document.body.style.overflow = ""
+			previouslyFocused?.focus?.()
 		}
 	}, [handleKeyDown])
 
@@ -58,11 +102,14 @@ export default function AnimalModal({
 			/>
 
 			{/* Panel */}
-			<div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+			<div
+				ref={panelRef}
+				className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+			>
 				{/* Header */}
 				<div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-start justify-between rounded-t-2xl">
 					<div className="flex items-center gap-4">
-						<Icon src={animal.icon} alt={animal.species} size={56} />
+						{icon && <Icon src={icon} alt={animal.species} size={56} />}
 						<div>
 							<h2 id="modal-title" className="text-xl font-bold text-slate-800">
 								{animal.name}

@@ -7,6 +7,7 @@ import type { Animal } from "@/types/animal"
 import Icon from "@/components/Icon"
 import StatusBar from "@/components/StatusBar"
 import StatusBadge from "@/components/StatusBadge"
+import { getAnimalIcon } from "@/utils/animalIcons"
 
 interface AnimalCardProps {
 	animal: Animal
@@ -14,6 +15,7 @@ interface AnimalCardProps {
 }
 
 export default function AnimalCard({ animal, onSelect }: AnimalCardProps) {
+	const icon = getAnimalIcon(animal.species)
 	return (
 		<button
 			type="button"
@@ -23,7 +25,7 @@ export default function AnimalCard({ animal, onSelect }: AnimalCardProps) {
 		>
 			{/* Card header */}
 			<div className="flex items-start justify-between mb-3">
-				<Icon src={animal.icon} alt={animal.species} size={48} />
+				{icon && <Icon src={icon} alt={animal.species} size={48} />}
 				<StatusBadge status={animal.status} />
 			</div>
 
